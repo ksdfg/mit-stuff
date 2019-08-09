@@ -6,42 +6,42 @@ USE company;
 Create tables emlpoyee and department, then add constraints and values.
 */
 
-CREATE TABLE `employee` (
-  `SSN` int(11) NOT NULL,
-  `Name` varchar(10) DEFAULT NULL,
-  `DOB` date DEFAULT NULL,
-  `StDate` date DEFAULT NULL,
-  `Address` varchar(60) DEFAULT NULL,
-  `Salary` float(10,2) DEFAULT NULL,
-  `Sex` char(1) DEFAULT NULL,
-  `DNo` int(11) DEFAULT NULL,
-  `SupSSN` int(11) DEFAULT NULL,
-  PRIMARY KEY (`SSN`),
-  KEY `fk_emp_dno` (`DNo`),
-  KEY `fk_supervisor` (`SupSSN`),
-  CONSTRAINT `fk_emp_dno` FOREIGN KEY (`DNo`) REFERENCES `department` (`DNo`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_supervisor` FOREIGN KEY (`SupSSN`) REFERENCES `employee` (`SSN`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE employee (
+  SSN int(11) NOT NULL,
+  Name varchar(10) DEFAULT NULL,
+  DOB date DEFAULT NULL,
+  StDate date DEFAULT NULL,
+  Address varchar(60) DEFAULT NULL,
+  Salary float(10,2) DEFAULT NULL,
+  Sex char(1) DEFAULT NULL,
+  DNo int(11) DEFAULT NULL,
+  SupSSN int(11) DEFAULT NULL,
+  PRIMARY KEY (SSN),
+  KEY fk_emp_dno (DNo),
+  KEY fk_supervisor (SupSSN),
+  CONSTRAINT fk_emp_dno FOREIGN KEY (DNo) REFERENCES department (DNo) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_supervisor FOREIGN KEY (SupSSN) REFERENCES employee (SSN) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
-CREATE TABLE `department` (
-  `Name` varchar(30) DEFAULT NULL,
-  `DNo` int(11) NOT NULL,
-  `MgrSSN` int(11) DEFAULT NULL,
-  `SDate` date DEFAULT NULL,
-  PRIMARY KEY (`DNo`),
-  KEY `fk_mgr` (`MgrSSN`),
-  CONSTRAINT `fk_mgr` FOREIGN KEY (`MgrSSN`) REFERENCES `employee` (`SSN`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE department (
+  Name varchar(30) DEFAULT NULL,
+  DNo int(11) NOT NULL,
+  MgrSSN int(11) DEFAULT NULL,
+  SDate date DEFAULT NULL,
+  PRIMARY KEY (DNo),
+  KEY fk_mgr (MgrSSN),
+  CONSTRAINT fk_mgr FOREIGN KEY (MgrSSN) REFERENCES employee (SSN) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
 ALTER TABLE employee
-ADD CONSTRAINT `fk_emp_dno` FOREIGN KEY (`DNo`) REFERENCES `department` (`DNo`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `fk_supervisor` FOREIGN KEY (`SupSSN`) REFERENCES `employee` (`SSN`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT fk_emp_dno FOREIGN KEY (DNo) REFERENCES department (DNo) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT fk_supervisor FOREIGN KEY (SupSSN) REFERENCES employee (SSN) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*
 Insert values while keeping some null for now
 */
 
-INSERT INTO `employee` VALUES 
+INSERT INTO employee VALUES 
 (101,'Dick','1994-04-18','2014-09-28','Jhopdi #3, Galli #5, Block #4, Dharavi, Mumbai',90341.82,'m',default,default),
 (102,'Harry','1991-10-02','2014-05-04','#1, McPa Society Wing B5, Naples',100460.81,'m',default,default),
 (103,'Maurilio','1994-11-06','2013-06-18','#3, Slaviola Enclave, Boston',9376.33,'m',default,default),
@@ -53,7 +53,7 @@ INSERT INTO `employee` VALUES
 (109,'Quitterie','1987-05-29','2013-03-28','#23, Winston Street, Brooklyn',119826.50,'f',default,default),
 (110,'Nezuko','1988-12-28','2014-12-15','#1, McPa Society Wing B5, Naples',85413.35,'f',default,default);
 
-INSERT INTO `department` VALUES 
+INSERT INTO department VALUES 
 ('Marketing',10321,default,'2019-04-15'),
 ('R & D',10322,default,'2019-04-12'),
 ('Internal Affairs',10323,default,'2019-03-19'),
@@ -128,17 +128,17 @@ WHERE DNo = 10325;
 Create table dependent, and add values
 */
 
-CREATE TABLE `dependent` (
-  `Name` varchar(20) NOT NULL,
-  `Sex` char(1) DEFAULT NULL,
-  `DOB` date DEFAULT NULL,
-  `Relation` varchar(20) DEFAULT NULL,
-  `SSN` int(11) NOT NULL,
-  KEY `fk_ssn` (`SSN`),
-  CONSTRAINT `fk_ssn` FOREIGN KEY (`SSN`) REFERENCES `employee` (`SSN`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE dependent (
+  Name varchar(20) NOT NULL,
+  Sex char(1) DEFAULT NULL,
+  DOB date DEFAULT NULL,
+  Relation varchar(20) DEFAULT NULL,
+  SSN int(11) NOT NULL,
+  KEY fk_ssn (SSN),
+  CONSTRAINT fk_ssn FOREIGN KEY (SSN) REFERENCES employee (SSN) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
-INSERT INTO `dependent` VALUES 
+INSERT INTO dependent VALUES 
 ('Tanjiro','m','1987-07-14','Brother',110),
 ('Funicia','f','1993-05-20','Sister',109),
 ('Ivan','m','1960-01-21','Father',108),
@@ -152,14 +152,14 @@ INSERT INTO `dependent` VALUES
 Create table deptloc, and add values
 */
 
-CREATE TABLE `deptloc` (
-  `DNo` int(11) NOT NULL,
-  `Location` varchar(60) NOT NULL,
-  PRIMARY KEY (`DNo`,`Location`),
-  CONSTRAINT `fk_deptloc_dno` FOREIGN KEY (`DNo`) REFERENCES `department` (`DNo`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE deptloc (
+  DNo int(11) NOT NULL,
+  Location varchar(60) NOT NULL,
+  PRIMARY KEY (DNo,Location),
+  CONSTRAINT fk_deptloc_dno FOREIGN KEY (DNo) REFERENCES department (DNo) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
-INSERT INTO `deptloc` VALUES 
+INSERT INTO deptloc VALUES 
 (10321,'Naples'),
 (10321,'New Jersey'),
 (10322,'Naples'),
@@ -174,17 +174,17 @@ INSERT INTO `deptloc` VALUES
 Create table project, and add values
 */
 
-CREATE TABLE `project` (
-  `PName` varchar(20) DEFAULT NULL,
-  `PNo` int(11) NOT NULL,
-  `Location` varchar(60) DEFAULT NULL,
-  `DNo` int(11) DEFAULT NULL,
-  PRIMARY KEY (`PNo`),
-  KEY `fk_project_dno` (`DNo`),
-  CONSTRAINT `fk_project_dno` FOREIGN KEY (`DNo`) REFERENCES `department` (`DNo`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE project (
+  PName varchar(20) DEFAULT NULL,
+  PNo int(11) NOT NULL,
+  Location varchar(60) DEFAULT NULL,
+  DNo int(11) DEFAULT NULL,
+  PRIMARY KEY (PNo),
+  KEY fk_project_dno (DNo),
+  CONSTRAINT fk_project_dno FOREIGN KEY (DNo) REFERENCES department (DNo) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
-INSERT INTO `project` VALUES 
+INSERT INTO project VALUES 
 ('Senku 4',1,'New Jersey',10322),
 ('SpaceX Integration',2,'Naples',10321),
 ('Half Life 3',3,'Naples',10322),
@@ -200,17 +200,17 @@ INSERT INTO `project` VALUES
 Create table works, and add values
 */
 
-CREATE TABLE `works` (
-  `SSN` int(11) NOT NULL,
-  `PNo` int(11) NOT NULL,
-  `Hours` int(11) DEFAULT NULL,
-  PRIMARY KEY (`SSN`,`PNo`),
-  KEY `fk_work_pno` (`PNo`),
-  CONSTRAINT `fk_work_pno` FOREIGN KEY (`PNo`) REFERENCES `project` (`PNo`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_work_ssn` FOREIGN KEY (`SSN`) REFERENCES `employee` (`SSN`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE works (
+  SSN int(11) NOT NULL,
+  PNo int(11) NOT NULL,
+  Hours int(11) DEFAULT NULL,
+  PRIMARY KEY (SSN,PNo),
+  KEY fk_work_pno (PNo),
+  CONSTRAINT fk_work_pno FOREIGN KEY (PNo) REFERENCES project (PNo) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_work_ssn FOREIGN KEY (SSN) REFERENCES employee (SSN) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
-INSERT INTO `works` VALUES 
+INSERT INTO works VALUES 
 (101,6,47),
 (102,2,32),
 (103,9,39),
