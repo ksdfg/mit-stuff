@@ -18,9 +18,7 @@ CREATE TABLE employee (
   SupSSN int(11) DEFAULT NULL,
   PRIMARY KEY (SSN),
   KEY fk_emp_dno (DNo),
-  KEY fk_supervisor (SupSSN),
-  CONSTRAINT fk_emp_dno FOREIGN KEY (DNo) REFERENCES department (DNo) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT fk_supervisor FOREIGN KEY (SupSSN) REFERENCES employee (SSN) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY fk_supervisor (SupSSN)
 )
 
 CREATE TABLE department (
