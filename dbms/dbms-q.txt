@@ -1,0 +1,29 @@
+
+----------------------------------------------------------------------------------------------------------------------
+
+Queries on single table
+
+----------------------------------------------------------------------------------------------------------------------
+
+• Retrieve dob and address of employee whose name is Mahesh Kumar (or some other name for me - lets go with nezuko)
+
+
+• Distinct salary
+
+
+• retrieve all employees whose address is in hyedrabad, ap (lets go with naples for our table)
+
+
+• Find all employees who were born during 1980s
+
+
+• Find salary which is between 80,000 and 90,000
+
+
+• All employees who do not have supervisors
+
+
+• Delete details from employee table whose last name is verma
+
+
+• Change the location and controlling dept number of project number 10 to brooklyn and 10325

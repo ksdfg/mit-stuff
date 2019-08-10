@@ -1,4 +1,4 @@
-from RPi.GPIO import setmode, setwarnings,setup, output, BCM, HIGH, LOW, OUT, cleanup
+from RPi.GPIO import setmode, setwarnings, setup, output, BCM, HIGH, LOW, OUT, cleanup
 from time import sleep
 
 pins = [17, 27, 22, 23]
