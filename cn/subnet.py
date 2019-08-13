@@ -25,7 +25,7 @@ masks = {
     'C': ['255.255.255.', 8]
 }
 
-number_hosts = int(input("Enter number of hosts: "))
+number_hosts = int(input("Enter number of hosts: ")) + 2
 i = 1
 while True:
     result = 2 ** i
