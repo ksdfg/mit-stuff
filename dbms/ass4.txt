@@ -1,0 +1,207 @@
+Microsoft Windows [Version 10.0.17763.678]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\ksdfg>mysql -u root -p
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.16 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database ass4
+    -> ;
+Query OK, 1 row affected (0.78 sec)
+
+mysql> use ass4
+Database changed
+mysql> show tables;
+Empty set (0.31 sec)
+
+mysql> create table customer(
+    -> cust_id int primary key check(cust_id > 100 and cust_id < 10000),
+    -> cust_name varchar(20),
+    -> annual_revenue float(10,2) default (20000),
+    -> cust_type enum ('manufacturer', 'wholesaler', 'retailer')
+    -> );
+Query OK, 0 rows affected (1.37 sec)
+
+mysql> describe customer
+    -> ;
++----------------+----------------------------------------------+------+-----+---------+-------------------+
+| Field          | Type                                         | Null | Key | Default | Extra             |
++----------------+----------------------------------------------+------+-----+---------+-------------------+
+| cust_id        | int(11)                                      | NO   | PRI | NULL    |                   |
+| cust_name      | varchar(20)                                  | YES  |     | NULL    |                   |
+| annual_revenue | float(10,2)                                  | YES  |     | 20000   | DEFAULT_GENERATED |
+| cust_type      | enum('manufacturer','wholesaler','retailer') | YES  |     | NULL    |                   |
++----------------+----------------------------------------------+------+-----+---------+-------------------+
+4 rows in set (0.07 sec)
+
+mysql> create table shipment(
+    -> shipment_id int primary key,
+    -> cust_id int,
+    -> weight float(6,2) check (weight < 1000) default 10,
+    -> truck_id int,
+    -> destination varchar(20),
+    -> ship_date date
+    -> );
+Query OK, 0 rows affected (0.46 sec)
+
+mysql> desc shipment;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| shipment_id | int(11)     | NO   | PRI | NULL    |       |
+| cust_id     | int(11)     | YES  |     | NULL    |       |
+| weight      | float(6,2)  | YES  |     | 10.00   |       |
+| truck_id    | int(11)     | YES  |     | NULL    |       |
+| destination | varchar(20) | YES  |     | NULL    |       |
+| ship_date   | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> create table truck(
+    -> truck_# int primary key,
+    -> driver_name varchar(20)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'driver_name varchar(20)
+)' at line 3
+mysql> create table truck(
+    -> truck_id int primary key,
+    -> driver_name varchar(20)
+    -> );
+Query OK, 0 rows affected (0.37 sec)
+
+mysql> create table city(
+    -> city_name varchar(20) primary key,
+    -> population int
+    -> );
+Query OK, 0 rows affected (0.50 sec)
+
+mysql> alter table shipment add constraint fk_cust foreign key (cust_id) references customer(cust_id);
+Query OK, 0 rows affected (2.46 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show create table shipment;
++----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table    | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
++----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| shipment | CREATE TABLE `shipment` (
+  `shipment_id` int(11) NOT NULL,
+  `cust_id` int(11) DEFAULT NULL,
+  `weight` float(6,2) DEFAULT '10.00',
+  `truck_id` int(11) DEFAULT NULL,
+  `destination` varchar(20) DEFAULT NULL,
+  `ship_date` date DEFAULT NULL,
+  PRIMARY KEY (`shipment_id`),
+  KEY `fk_cust` (`cust_id`),
+  CONSTRAINT `fk_cust` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`cust_id`),
+  CONSTRAINT `shipment_chk_1` CHECK ((`weight` < 1000))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table shipment add constraint fk_truck foreign key (truck_id) references truck(truck_id);
+Query OK, 0 rows affected (1.71 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table shipment add constraint fk_dest foreign key (destination) references city (city_name);
+Query OK, 0 rows affected (1.76 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc shipment;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| shipment_id | int(11)     | NO   | PRI | NULL    |       |
+| cust_id     | int(11)     | YES  | MUL | NULL    |       |
+| weight      | float(6,2)  | YES  |     | 10.00   |       |
+| truck_id    | int(11)     | YES  | MUL | NULL    |       |
+| destination | varchar(20) | YES  | MUL | NULL    |       |
+| ship_date   | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+6 rows in set (0.11 sec)
+
+mysql> insert into truck values
+    -> (10, 'Allen'),
+    -> (11, 'Sham'),
+    -> (12, 'Ram'),
+    -> (13, 'Sagar');
+Query OK, 4 rows affected (0.51 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from truck;
++----------+-------------+
+| truck_id | driver_name |
++----------+-------------+
+|       10 | Allen       |
+|       11 | Sham        |
+|       12 | Ram         |
+|       13 | Sagar       |
++----------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into city values
+    -> ('Pune', 6000000),
+    -> ('Mumbai', 40000000),
+    -> ('Delhi', 50000000),
+    -> ('Aurangabad', 200000),
+    -> ('Chennai', 78000000),
+    -> ('Surat', 1231231),
+    -> ('Jahirabad', 3141444);
+Query OK, 7 rows affected (0.20 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++----------------+----------------------------------------------+------+-----+---------+-------------------+
+| Field          | Type                                         | Null | Key | Default | Extra             |
++----------------+----------------------------------------------+------+-----+---------+-------------------+
+| cust_id        | int(11)                                      | NO   | PRI | NULL    |                   |
+| cust_name      | varchar(20)                                  | YES  |     | NULL    |                   |
+| annual_revenue | float(10,2)                                  | YES  |     | 20000   | DEFAULT_GENERATED |
+| cust_type      | enum('manufacturer','wholesaler','retailer') | YES  |     | NULL    |                   |
++----------------+----------------------------------------------+------+-----+---------+-------------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer modify cust_type varchar(25) check (cust_type like '%wholesaler' or cust_type like '%retailer' or cust_type like '%manufacturer');
+Query OK, 0 rows affected (1.61 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++----------------+-------------+------+-----+---------+-------------------+
+| Field          | Type        | Null | Key | Default | Extra             |
++----------------+-------------+------+-----+---------+-------------------+
+| cust_id        | int(11)     | NO   | PRI | NULL    |                   |
+| cust_name      | varchar(20) | YES  |     | NULL    |                   |
+| annual_revenue | float(10,2) | YES  |     | 20000   | DEFAULT_GENERATED |
+| cust_type      | varchar(25) | YES  |     | NULL    |                   |
++----------------+-------------+------+-----+---------+-------------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into customer values
+    -> (101, 'Rajesh Shah;;;;
+    '> ;
+    '> ';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 4
+mysql> alter table customer modify cust_name varchar(40);
+Query OK, 0 rows affected (0.22 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into customer values
+    -> (101, 'Rajesh Shah', 100000, 'Speciality Wholesaler'),
+    -> (153, 'Sanjay Surana', 3400000, 'Retailer'),
+    -> (184, 'Komal Malviya', 96000, 'Drop Ship Wholesalers'),
+    -> (599, 'Nitesh Jagdale', 7800, 'Retailer'),
+    -> (785, 'Saurabh Deshpande', 500000, 'On-line Wholesaler '),
+    -> (986, 'Satish Kumar', 30000, 'Retailer'),
+    -> (200, 'Kuber Khanna', 20083, 'Drop Ship Wholesalers');
+Query OK, 7 rows affected (0.25 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
