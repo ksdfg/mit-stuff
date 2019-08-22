@@ -224,3 +224,42 @@ mysql> insert into shipment values
 Query OK, 15 rows affected (0.22 sec)
 Records: 15  Duplicates: 0  Warnings: 0
 
+mysql> select c.cust_name as name from customer c, shipment s where s.cust_id = c.cust_id and s.destination = 'Mumbai';
++-------------------+
+| name              |
++-------------------+
+| Rajesh Shah       |
+| Sanjay Surana     |
+| Saurabh Deshpande |
++-------------------+
+3 rows in set (0.08 sec)
+
+mysql> select c.city_name as name, c.population as population from shipment s, city c where s.destination = c.city_name and s.weight > 50;
++------------+------------+
+| name       | population |
++------------+------------+
+| Aurangabad |     200000 |
+| Delhi      |   50000000 |
+| Mumbai     |   40000000 |
+| Mumbai     |   40000000 |
+| Pune       |    6000000 |
+| Pune       |    6000000 |
+| Pune       |    6000000 |
+| Pune       |    6000000 |
+| Pune       |    6000000 |
+| Pune       |    6000000 |
+| Pune       |    6000000 |
++------------+------------+
+11 rows in set (0.00 sec)
+
+mysql> select c.* from customer c, shipment s where c.cust_id = s.cust_id and c.annual_revenue > 500 and s.weight < 50;
++---------+----------------+----------------+-----------------------+
+| cust_id | cust_name      | annual_revenue | cust_type             |
++---------+----------------+----------------+-----------------------+
+|     153 | Sanjay Surana  |     3400000.00 | Retailer              |
+|     184 | Komal Malviya  |       96000.00 | Drop Ship Wholesalers |
+|     184 | Komal Malviya  |       96000.00 | Drop Ship Wholesalers |
+|     599 | Nitesh Jagdale |        7800.00 | Retailer              |
++---------+----------------+----------------+-----------------------+
+4 rows in set (0.10 sec)
+
