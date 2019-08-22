@@ -263,3 +263,13 @@ mysql> select c.* from customer c, shipment s where c.cust_id = s.cust_id and c.
 +---------+----------------+----------------+-----------------------+
 4 rows in set (0.10 sec)
 
+mysql> select c.* from customer c, shipment s where c.cust_id = s.cust_id and c.annual_revenue > 1000 and (s.weight < 10 or s.destination = 'Mumbai');
++---------+-------------------+----------------+-----------------------+
+| cust_id | cust_name         | annual_revenue | cust_type             |
++---------+-------------------+----------------+-----------------------+
+|     101 | Rajesh Shah       |      100000.00 | Speciality Wholesaler |
+|     153 | Sanjay Surana     |     3400000.00 | Retailer              |
+|     785 | Saurabh Deshpande |      500000.00 | On-line Wholesaler    |
++---------+-------------------+----------------+-----------------------+
+3 rows in set (0.00 sec)
+
