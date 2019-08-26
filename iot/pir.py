@@ -1,12 +1,28 @@
-from gpiozero import MotionSensor, LED
-from time import sleep
+import RPi.GPIO as GPIO
+import time
 
-MotionSensor pir = MotionSensor(pin_no)
-LED l = LED(pin_no)
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
 
-def yes():
-  l.on()
-  sleep(0.5)
-  l.off()
+pir = 18
+led = 24
 
-pir.when_motion = lambda: yes()
+print('led on')
+GPIO.setup(pir, GPIO.IN)
+time.sleep(1)
+GPIO.setup(led, GPIO.OUT)
+print('led off')
+
+GPIO.output(led, GPIO.HIGH)
+time.sleep(1)
+GPIO.output(led, GPIO.LOW)
+time.sleep(1)
+
+for i in range(15):
+    if GPIO.input(pir):
+        print('yay')
+        GPIO.output(led, GPIO.HIGH)
+        time.sleep(0.5)
+        GPIO.output(led, GPIO.LOW)
+        
+GPIO.cleanup()
