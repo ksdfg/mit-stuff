@@ -1,0 +1,146 @@
+
+C:\Users\ksdfg>mysql -u root -p
+Enter password: ************
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+
+C:\Users\ksdfg>mysql -u root -p
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.0.16 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use company;
+Database changed
+mysql> create table deptsal;
+ERROR 1113 (42000): A table must have at least 1 column
+mysql> create table deptsal
+    -> (DNo int primary key, totalSalary int default);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax 
+to use near ')' at line 2
+mysql> (DNo int primary key, totalSalary int default 0);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax 
+to use near 'DNo int primary key, totalSalary int default 0)' at line 1
+mysql> (DNo int primary key, totalSalary int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax 
+to use near 'DNo int primary key, totalSalary int)' at line 1
+mysql> create table deptSal
+    -> (DNo int primary key, totalSalary int);
+Query OK, 0 rows affected (1.11 sec)
+
+mysql> create procedure updatesal(IN param int)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax 
+to use near '' at line 1
+mysql> delimiter //
+mysql> create procedure updatesal(IN param int)
+    -> begin
+    -> insert into deptsal values
+    -> (param, (select sum(salary) from employee where dno = param));
+    -> end//
+ERROR 1304 (42000): PROCEDURE updatesal already exists
+mysql> drop procedure updatesal;
+    -> //
+Query OK, 0 rows affected (0.22 sec)
+
+mysql> create procedure updatesal(IN param int)
+    -> begin
+    -> insert into deptsal values
+    -> (param, (select sum(salary) from employee where dno = param));
+    -> end//
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> delimiter ;
+mysql> drop table deptsal;
+Query OK, 0 rows affected (0.50 sec)
+
+mysql> create table deptsal as
+    -> ;;;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax 
+to use near '' at line 1
+ERROR:
+No query specified
+
+ERROR:
+No query specified
+
+mysql> drop procedure updatesal;
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> delimiter //
+mysql> create procedure updatesal
+    -> begin
+    -> update deptsal
+    -> set totalsalary = (select sum(salary) from employee where dno = param//
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax 
+to use near 'begin
+update deptsal
+set totalsalary = (select sum(salary) from employee where d' at line 2
+mysql> create procedure updatesal(IN param int)
+    -> begin
+    -> update deptsal
+    -> set totalsalary = (select sum(salary) from employee where dno = param//
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax 
+to use near '' at line 4
+mysql> create procedure updatesal(IN param int)
+    -> begin
+    -> update deptsal
+    -> set totalsalary = (select sum(salary) from employee where dno = param) where dno = param;
+    -> end//
+Query OK, 0 rows affected (0.22 sec)
+
+mysql> delimiter ;
+mysql> selct * from deptsal;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax 
+to use near 'selct * from deptsal' at line 1
+mysql> select * from deptsal;
+ERROR 1146 (42S02): Table 'company.deptsal' doesn't exist
+mysql> create table deptsal as
+    -> select DNo, 0 as totalsalary from department;
+Query OK, 5 rows affected (0.82 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> call updatesal(10321);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> select * from deptsal;
++-------+-------------+
+| DNo   | totalsalary |
++-------+-------------+
+| 10325 |           0 |
+| 10323 |           0 |
+| 10321 |      121611 |
+| 10322 |           0 |
+| 10324 |           0 |
++-------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> call updatesal(10322);
+Query OK, 1 row affected (0.18 sec)
+
+mysql> select * from deptsal;
++-------+-------------+
+| DNo   | totalsalary |
++-------+-------------+
+| 10325 |           0 |
+| 10323 |           0 |
+| 10321 |      121611 |
+| 10322 |      277423 |
+| 10324 |           0 |
++-------+-------------+
+5 rows in set (0.00 sec)
+
+mysql>
