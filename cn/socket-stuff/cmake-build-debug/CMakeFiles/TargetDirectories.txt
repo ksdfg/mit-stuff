@@ -1,3 +1,0 @@
-/cygdrive/k/mit-stuff/cn/socket-stuff/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/cygdrive/k/mit-stuff/cn/socket-stuff/cmake-build-debug/CMakeFiles/socket_stuff.dir
-/cygdrive/k/mit-stuff/cn/socket-stuff/cmake-build-debug/CMakeFiles/edit_cache.dir

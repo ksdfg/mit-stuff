@@ -1,4 +1,4 @@
-l = list(map(int, input("Enter numbers : ").split()))
+l = list(map(float, input("Enter numbers : ").split()))
 
 if input("bubble or selection? ") == 'bubble':
     print("Bubble sort :")

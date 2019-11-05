@@ -1,1 +1,0 @@
-/usr/bin/c++.exe -g  -Wl,--enable-auto-import CMakeFiles/socket_stuff.dir/main.cpp.o  -o socket_stuff.exe -Wl,--out-implib,libsocket_stuff.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
