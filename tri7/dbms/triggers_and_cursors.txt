@@ -1,0 +1,440 @@
+==========================================TRIGGERS===========================================================
+
+Question 1]
+
+Create a trigger to simulate Recycle Bin for employee table. If any row gets deleted from
+Emp, same row must get stored in Emp_Bin
+
+Emp(Eno,Ename,Salary)
+Emp_Bin(Eno,Ename,Salary)
+
+
+mysql> create database recyclebin;
+Query OK, 1 row affected (1.04 sec)
+
+mysql> use recyclebin;
+Database changed
+mysql> create table emp(
+    -> eno int,
+    -> ename varchar(20),
+    -> salary int);
+Query OK, 0 rows affected (1.33 sec)
+
+mysql> desc emp;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| eno    | int(11)     | YES  |     | NULL    |       |
+| ename  | varchar(20) | YES  |     | NULL    |       |
+| salary | int(11)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.24 sec)
+
+mysql> insert into emp
+    -> values
+    -> (1,'Ritika',50000),
+    -> (2,'Aman','13543),
+    '> ;
+    '> ^C
+mysql> insert into emp
+    -> values
+    -> (1,'Ritika',50000),
+    -> (2,'Aman','13543'),
+    -> (3,'Rajesh',35443),
+    -> (4,'Ansh',51313),
+    -> (5,'Vani',13135),
+    -> (6,'Akash',64120),
+    -> (7,'Harsh',46464
+    -> ),
+    -> (8,'Tina',97512);
+Query OK, 8 rows affected (0.74 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp;
++------+--------+--------+
+| eno  | ename  | salary |
++------+--------+--------+
+|    1 | Ritika |  50000 |
+|    2 | Aman   |  13543 |
+|    3 | Rajesh |  35443 |
+|    4 | Ansh   |  51313 |
+|    5 | Vani   |  13135 |
+|    6 | Akash  |  64120 |
+|    7 | Harsh  |  46464 |
+|    8 | Tina   |  97512 |
++------+--------+--------+
+8 rows in set (0.00 sec)
+
+mysql> show tables;
++----------------------+
+| Tables_in_recyclebin |
++----------------------+
+| emp                  |
++----------------------+
+1 row in set (0.16 sec)
+
+mysql> create table emp_bin(
+    -> eno int,
+    -> ename varchar(20),
+    -> salary int);
+Query OK, 0 rows affected (0.55 sec)
+
+mysql> show tables;
++----------------------+
+| Tables_in_recyclebin |
++----------------------+
+| emp                  |
+| emp_bin              |
++----------------------+
+2 rows in set (0.00 sec)
+
+mysql> desc bin;
+ERROR 1146 (42S02): Table 'recyclebin.bin' doesn't exist
+mysql> desc emp_bin;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| eno    | int(11)     | YES  |     | NULL    |       |
+| ename  | varchar(20) | YES  |     | NULL    |       |
+| salary | int(11)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp;
++------+--------+--------+
+| eno  | ename  | salary |
++------+--------+--------+
+|    1 | Ritika |  50000 |
+|    2 | Aman   |  13543 |
+|    3 | Rajesh |  35443 |
+|    4 | Ansh   |  51313 |
+|    5 | Vani   |  13135 |
+|    6 | Akash  |  64120 |
+|    7 | Harsh  |  46464 |
+|    8 | Tina   |  97512 |
++------+--------+--------+
+8 rows in set (0.00 sec)
+
+mysql> delimiter $
+mysql> create trigger empdelete
+    -> after delete
+    -> on emp for each row
+    -> begin
+    -> insert into emp_bin values
+    -> (OLD.eno, OLD.ename, OLD.salary);
+    -> end $
+Query OK, 0 rows affected (0.24 sec)
+
+mysql> delimiter ;
+mysql> delete from emp where eno = 6;
+Query OK, 1 row affected (0.81 sec)
+
+mysql> select * from emp_bin;
++------+-------+--------+
+| eno  | ename | salary |
++------+-------+--------+
+|    6 | Akash |  64120 |
++------+-------+--------+
+1 row in set (0.00 sec)
+
+========================================================================================================
+Question 2 ]
+
+Employee should receive an automatic increase in the salary. 
+If the minimum salary for the job is increased, the employee’s salary with that
+jobid must be automatically incremented with the difference.  
+
+emp(Empno,Ename,Sal,Jobid)
+Job(Jobid,Minsal,Maxsal)
+
+mysql> delimiter $
+mysql> create trigger inc_salary
+    -> after update
+    -> on jobid for each row
+    -> begin
+    -> update emp
+    -> set sal = sal + (NEW.minsal - sal)
+    -> where sal < NEW.minsal and jobid = NEW.jobid;
+    -> end$
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> select * from jobid;
+    -> $
++-------+----------+-----------+
+| jobid | minsal   | maxsal    |
++-------+----------+-----------+
+|   187 |  1500.00 |  20000.00 |
+|  1610 |  5000.00 |  19750.00 |
+|  1720 | 25000.00 | 200000.00 |
+|  4517 |  6000.00 |  28792.00 |
+|  5950 |  1000.00 |  90000.00 |
+|  6465 | 10000.00 |  50000.00 |
+|  6546 |  2580.00 | 146310.00 |
+|  6685 |  5078.00 | 161660.00 |
++-------+----------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> delimiter ;
+mysql> select * from jobid;
++-------+----------+-----------+
+| jobid | minsal   | maxsal    |
++-------+----------+-----------+
+|   187 |  1500.00 |  20000.00 |
+|  1610 |  5000.00 |  19750.00 |
+|  1720 | 25000.00 | 200000.00 |
+|  4517 |  6000.00 |  28792.00 |
+|  5950 |  1000.00 |  90000.00 |
+|  6465 | 10000.00 |  50000.00 |
+|  6546 |  2580.00 | 146310.00 |
+|  6685 |  5078.00 | 161660.00 |
++-------+----------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+--------+-------+
+| empno | ename  | sal    | jobid |
++-------+--------+--------+-------+
+|   123 | Mehek  | 464743 |   187 |
+|   207 | Alfeez |  10000 |  1610 |
+|     1 | Smita  |  17000 |  1613 |
+|   409 | Akriti | 100000 |  1720 |
+|   412 | Rahul  |  11500 |  4517 |
+|   846 | Aarti  |  61214 |  5950 |
+|   156 | Preeti |  21500 |  6465 |
+|    47 | Lucky  |  50000 |  6546 |
+|   942 | Neil   |  66464 |  6685 |
++-------+--------+--------+-------+
+9 rows in set (0.11 sec)
+
+mysql> update emp
+    -> set sal = 1
+    -> where jobid = 187;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp;
++-------+--------+--------+-------+
+| empno | ename  | sal    | jobid |
++-------+--------+--------+-------+
+|   123 | Mehek  |      1 |   187 |
+|   207 | Alfeez |  10000 |  1610 |
+|     1 | Smita  |  17000 |  1613 |
+|   409 | Akriti | 100000 |  1720 |
+|   412 | Rahul  |  11500 |  4517 |
+|   846 | Aarti  |  61214 |  5950 |
+|   156 | Preeti |  21500 |  6465 |
+|    47 | Lucky  |  50000 |  6546 |
+|   942 | Neil   |  66464 |  6685 |
++-------+--------+--------+-------+
+9 rows in set (0.00 sec)
+
+mysql> update jobid
+    -> set minsal = 100
+    -> where jobid = 187;
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp;
++-------+--------+--------+-------+
+| empno | ename  | sal    | jobid |
++-------+--------+--------+-------+
+|   123 | Mehek  |    100 |   187 |
+|   207 | Alfeez |  10000 |  1610 |
+|     1 | Smita  |  17000 |  1613 |
+|   409 | Akriti | 100000 |  1720 |
+|   412 | Rahul  |  11500 |  4517 |
+|   846 | Aarti  |  61214 |  5950 |
+|   156 | Preeti |  21500 |  6465 |
+|    47 | Lucky  |  50000 |  6546 |
+|   942 | Neil   |  66464 |  6685 |
++-------+--------+--------+-------+
+9 rows in set (0.00 sec)
+
+=========================================================CURSORS==================================================
+Question 1]
+create procedure updateSalary2()
+      begin
+               declare done int default 0;
+               declare current_dnum int;
+               declare dnumcurr cursor for select dnumber from deptsal;
+               declare continue handler for not found set done = 1;
+               open dnumcurr;
+               repeat
+                       fetch dnumcurr into current_dnum ;
+                       update deptsal
+                       set totalsalary =(select sum(salary) from employee where DEPT_NUM=current_dnum)
+                       where dnumber = current_dnum;
+               until done
+               end repeat;
+               close dnumcurr;
+      end//
+
+mysql> select * from deptsal//
++---------+-------------+
+| dnumber | totalsalary |
++---------+-------------+
+|       1 |           0 |
+|       2 |           0 |
+|       3 |           0 |
+|       4 |           0 |
++---------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from deptsal//
++---------+-------------+
+| dnumber | totalsalary |
++---------+-------------+
+|       1 |      125000 |
+|       2 |      135000 |
+|       3 |       90000 |
+|       4 |       88000 |
++---------+-------------+
+4 rows in set (0.00 sec)
+
+
+---------------------------------------------------------------------------------------------------
+Question 2]
+mysql> select * from templist;
+--------------
+select * from templist
+--------------
+
++------+-----------+
+| en   | nm        |
++------+-----------+
+|   10 | Anakin    |
+|   20 | Luke      |
+|   30 | Obi       |
+|   40 | Leia      |
+|   50 | Chewbacca |
++------+-----------+
+5 rows in set (0.00 sec)
+ 
+mysql> delimiter //
+mysql> create procedure p12()
+    -> begin
+    -> declare v_eno int;
+    -> declare v_ename  varchar(10);
+    -> declare v_sal int;
+    -> declare done int default 0;
+    -> declare c1 cursor for select en,nm from templist;
+    -> declare continue handler for not found set done=1;
+    -> open c1;
+    -> repeat
+    -> fetch c1 into v_eno,v_ename;
+    -> if done=0 then
+    -> select v_eno,v_ename;
+    -> end if;
+    -> until done end repeat;
+    -> close c1;
+    -> end//
+--------------
+create procedure p12()
+begin
+declare v_eno int;
+declare v_ename  varchar(10);
+declare v_sal int;
+declare done int default 0;
+declare c1 cursor for select en,nm from templist;
+declare continue handler for not found set done=1;
+open c1;
+repeat
+fetch c1 into v_eno,v_ename;
+if done=0 then
+select v_eno,v_ename;
+end if;
+until done end repeat;
+close c1;
+end
+--------------
+
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> call p12()//
+--------------
+call p12()
+--------------
+
++-------+---------+
+| v_eno | v_ename |
++-------+---------+
+|    10 | Anakin  |
++-------+---------+
+1 row in set (0.00 sec)
+
++-------+---------+
+| v_eno | v_ename |
++-------+---------+
+|    20 | Luke    |
++-------+---------+
+1 row in set (0.00 sec)
+
++-------+---------+
+| v_eno | v_ename |
++-------+---------+
+|    30 | Obi     |
++-------+---------+
+1 row in set (0.00 sec)
+
++-------+---------+
+| v_eno | v_ename |
++-------+---------+
+|    40 | Leia    |
++-------+---------+
+1 row in set (0.00 sec)
+
++-------+-----------+
+| v_eno | v_ename   |
++-------+-----------+
+|    50 | Chewbacca |
++-------+-----------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+---------------------------------------------------------------------------------------
+Question 3]
+
+mysql> delimiter //
+mysql> create procedure p100()
+    -> begin
+    -> declare v_ssn int;
+    -> declare v_name varchar(10);
+    -> declare v_salary int;
+    -> declare done int default 0;
+    -> declare c1 cursor for select ssn,name,salary from employee;
+    -> declare continue handler for not found set done =1;
+    -> open c1;
+    -> repeat
+    -> fetch c1 into v_ssn,v_name,v_salary;
+    -> if done=0 then
+    -> insert into templist values(v_ssn, v_name);
+    -> end if;
+    -> until done end repeat;
+    -> close c1;
+    -> select * from templist;
+    -> end //
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> call p100()//
++------+--------+
+| en   | nm     |
++------+--------+
+|  101 | PRIYA  |
+|  102 | RAKESH |
+|  103 | NITA   |
+|  104 | HARSH  |
+|  105 | ARPIT  |
+|  106 | AMRITA |
+|  107 | YOGESH |
+|  108 | AMIT   |
+|  109 | NITIN  |
+|  110 | SIMRAN |
+|  112 | SIMRAN |
+|  113 | ANITA  |
++------+--------+
+12 rows in set (0.94 sec)
+
+Query OK, 0 rows affected (1.07 sec)
+
+============================================================THE END ===========================================

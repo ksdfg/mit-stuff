@@ -1,0 +1,22 @@
+parameter types
+
+1. IN type parameter
+	these types of parameters are used to send values to stored procedures
+
+2. OUT type parameter
+	these types of parameters are used to get values from user and change it's value 
+
+3. INOUT type parameter
+	wow
+
+
+how to create a procedure - 
+
+CREATE PROCEDURE <proc_name>
+	(param_spec1, param_Spec2, ...)
+begin
+	-- execution
+end
+
+
+to call the procedure, use CALL <proc_name>()
