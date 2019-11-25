@@ -1,4 +1,5 @@
-def qsort(arr, low, high):
+def qsort(array, low, high):
+    arr = array.copy()
     if low < high:
         i = low
         j = high
@@ -23,6 +24,5 @@ def qsort(arr, low, high):
 
 
 if __name__ == '__main__':
-    array = [10, 7, 8, 9, 1, 5]
-    print(array)
-    print(qsort(array, 0, len(array) - 1))
+    to_sort = [10, 7, 8, 9, 1, 5]
+    print(to_sort, qsort(to_sort, 0, len(to_sort) - 1))
