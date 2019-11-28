@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE books SYSTEM "book.dtd">
+<?xml-stylesheet type="text/xsl" href="book.xslt"?> 
+<books>
+       <book>
+			<title>Harry Potter and the Prisoner of Azkaban</title>
+		   <category>Fantasy Books</category>
+		   <author>J. K. Rowling</author>
+		   <publisher>Bloomsbury</publisher>
+		   <year>1999</year>
+		   <isbn>0-7475-4629-0</isbn>
+	   </book>
+	   <book>
+		<title>Essential XML for Web Professionals</title>
+		   <category>Technical Books</category>
+		   <author>Dan Livingston</author>
+		   <publisher>Prentice Hall </publisher>
+		   <year>2001</year>
+		   <isbn>0-13-066254-2</isbn>
+		</book>
+</books>

@@ -1,0 +1,28 @@
+<?xml version="1.0" standalone="yes"?>
+<!DOCTYPE empinfo [
+    <!ELEMENT empinfo (employee)>
+
+    <!ELEMENT employee (name, designation, email)>
+    <!ATTLIST employee id CDATA #REQUIRED>
+
+    <!ELEMENT name (#PCDATA)>
+    <!ATTLIST name from CDATA #IMPLIED>
+
+    <!ELEMENT designation (#PCDATA)>
+    <!ATTLIST designation discipline CDATA #FIXED "Web developer">
+
+    <!ELEMENT email (#PCDATA)>
+    <!ATTLIST email domain CDATA "personal">  
+]>
+<empinfo>
+    <employee id="1">
+        <name>Opal Kole</name>
+        <designation>Senior Engineer</designation>
+        <email>email@myemail.com</email>
+    </employee>
+    <employee id="2">
+        <name from="CA">Opal Kole</name>
+        <designation discipline="DBA">Senior Engineer</designation>
+        <email>email@email.com</email>
+    </employee>
+</empinfo>

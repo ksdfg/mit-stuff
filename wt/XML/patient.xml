@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<patient xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="patient.xsd">
+	<id>123</id>
+	<name>Anand</name>
+	<age>56</age>
+	<dob>1940-03/12</dob>
+	<gender>Male</gender>
+	<email>anand@gmail.com</email>
+	<address>
+		<zipcode> 411037 </zipcode>
+		<street> Gandhi road </street>
+		<city>Banglore</city>
+		<state>Karnataka</state>
+		<country>India</country>
+	</address>
+	<payment>
+		<cash>123</cash>
+	</payment>
+</patient>
