@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Form</title>
+
+    <script>
+        function validate() {
+            let form = document.forms['myForm'];
+            if (form['text'].value.match()) {
+                alert('no bye')
+            }
+        }
+    </script>
+</head>
+<body>
+<form id="myForm" onsubmit=" return validate()">
+    <label for="text">Enter text : </label><input id="text" type="text" name="text" required>
+    <br>
+    <label for="number">Enter number : </label><input id="number" type="number" name="number" required>
+    <br>
+    <input type="submit">
+</form>
+</body>
+</html>
