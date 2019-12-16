@@ -12,3 +12,16 @@ set format (how many digits) -> ok!
 build cube
 then, when it opens olapcube charts, add new chart -> select type -> select source -> select dimensions (just read) ->
 select
+
+
+-----/-----
+
+tableau:
+
+start new
+connext to data source
+shift to sheet
+on left side, all possible dimensions and measures are displayed
+drag and drop measures, as well as dimensions into columns, rows
+click on graphs to see visualisations
+drag and drop attributes to color, size, label etc. to change visualisations
