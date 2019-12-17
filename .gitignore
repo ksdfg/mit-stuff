@@ -1,3 +1,7 @@
 cmake-build-debug
 CMakeLists.txt
 .idea
+venv
+*.iml
+*.exe
+*.docx
