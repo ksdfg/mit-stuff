@@ -6,3 +6,5 @@ venv
 *.exe
 *.docx
 .vscode
+*.txt
+ 
