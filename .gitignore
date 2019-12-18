@@ -7,4 +7,5 @@ venv
 *.docx
 .vscode
 *.txt
+*.stackdump
  
