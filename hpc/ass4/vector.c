@@ -4,25 +4,17 @@
 #include <omp.h>
 
 // function to randomly generate two input files
-void generate(long long int size)
+void generate(char* filename, long long int size)
 {
-    // open input files
-    FILE *file1 = fopen("input1.txt", "w");
-    FILE *file2 = fopen("input2.txt", "w");
+    FILE *file = fopen(filename, "w");  // open input file
 
     // write random number into input files
     for (long long int i = 0; i < size; i++)
     {
-        fprintf(file1, "%lld ", rand());
-    }
-    for (long long int i = 0; i < size; i++)
-    {
-        fprintf(file2, "%lld ", rand());
+        fprintf(file, "%lld ", rand());
     }
 
-    // close input files
-    fclose(file1);
-    fclose(file2);
+    fclose(file);   // close input files
 }
 
 // function to read numbers from a file to an array
@@ -40,7 +32,9 @@ int main()
     printf("Enter size of arrays to be generated : ");
     scanf("%lld", &size);
 
-    generate(size);     // generate the input files
+    // generate the input files
+    generate("input1.txt", size);
+    generate("input2.txt", size);
 
     // open the input and output files
     FILE *file1 = fopen("input1.txt", "r");
@@ -66,10 +60,6 @@ int main()
         }
     }
 
-    // close both input files since their job is done
-    fclose(file1);
-    fclose(file2);
-
     // store sum of both vectors into sum
     #pragma omp parallel for
     for (long long int i = 0; i < size; i++)
@@ -94,10 +84,6 @@ int main()
     read(file1, size, arr1);
     read(file2, size, arr2);
 
-    // close both input files since their job is done
-    fclose(file1);
-    fclose(file2);
-
     // store sum of both vectors into sum
     for (long long int i = 0; i < size; i++)
     {
@@ -112,6 +98,10 @@ int main()
 
     printf("Serial : %f\n", omp_get_wtime() - start);
     /* END SERIAL EXECUTION */
+
+    // close both input files since their job is done
+    fclose(file1);
+    fclose(file2);
 
     return 0;
 }
