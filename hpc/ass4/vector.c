@@ -33,8 +33,17 @@ int main()
     scanf("%lld", &size);
 
     // generate the input files
-    generate("input1.txt", size);
-    generate("input2.txt", size);
+    #pragma omp parallel sections
+    {
+        #pragma omp section
+        {
+            generate("input1.txt", size);
+        }
+        #pragma omp section
+        {
+            generate("input2.txt", size);
+        }
+    }
 
     // open the input and output files
     FILE *file1 = fopen("input1.txt", "r");
