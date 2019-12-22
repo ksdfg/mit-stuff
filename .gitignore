@@ -8,4 +8,6 @@ venv
 .vscode
 *.txt
 *.stackdump
+project
+__pycache__
  
