@@ -1,3 +1,5 @@
+from os import remove
+
 import graphviz
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -26,3 +28,5 @@ dot_data = export_graphviz(dtr, out_file=None, feature_names=feature_list, class
                            filled=True, rounded=True, special_characters=True)
 graph = graphviz.Source(dot_data)
 graph.render("temps_graph")
+
+remove('temps_graph')
