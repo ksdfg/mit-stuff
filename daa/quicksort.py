@@ -1,4 +1,6 @@
 from random import choice
+from time import time
+
 
 def _qsort(array, low, high):
     arr = array.copy()
@@ -61,7 +63,22 @@ def qsort_random(array):
 
 
 if __name__ == '__main__':
-    to_sort = [10, 7, 8, 9, 1, 5]
+    to_sort = [10, 9, 8, 7, 5, 4, 3, 2, 1, 0]
 
-    print(to_sort, qsort(to_sort))
-    print(to_sort, qsort_random(to_sort))
+    print("Quicksort")
+    print(to_sort)
+    start = time()
+    sorted = qsort(to_sort)
+    end = time()
+    print("Sorted array is", sorted)
+    print("Time taken is", end - start)
+
+    print("\n-------\n")
+
+    print("Randomised Quicksort")
+    print(to_sort)
+    start = time()
+    sorted = qsort_random(to_sort)
+    end = time()
+    print("Sorted array is", sorted)
+    print("Time taken is", end - start)
