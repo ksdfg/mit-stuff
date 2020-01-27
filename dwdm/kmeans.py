@@ -6,7 +6,7 @@ def assign(dset, clusters):
         dist = []
         for c in clusters:
             dist.append(
-                ((d[0] - c['centroid'][0]) ** 2 + (d[0] - c['centroid'][0]) ** 2) ** (1 / 2)
+                ((d[0] - c['centroid'][0]) ** 2 + (d[1] - c['centroid'][1]) ** 2) ** (1 / 2)
             )
         clusters[dist.index(min(dist))]['values'].append(d)
 
