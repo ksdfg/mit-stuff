@@ -10,4 +10,4 @@ venv
 *.stackdump
 project
 __pycache__
- 
+*.class 
