@@ -3,9 +3,12 @@ n = 4
 
 def is_safe(result, row, col):
     global n
-    if 1 in result[row] or 1 in map(lambda x: x[col], result[:row]) or \
-            1 in map(lambda x: result[x[0]][x[1]], zip(range(row - 1, -1, -1), range(col - 1, -1, -1))) or \
-            1 in map(lambda x: result[x[0]][x[1]], zip(range(row - 1, -1, -1), range(col + 1, n))):
+    if (
+        1 in result[row]
+        or 1 in map(lambda x: x[col], result[:row])
+        or 1 in map(lambda x: result[x[0]][x[1]], zip(range(row - 1, -1, -1), range(col - 1, -1, -1)))
+        or 1 in map(lambda x: result[x[0]][x[1]], zip(range(row - 1, -1, -1), range(col + 1, n)))
+    ):
         return False
     return True
 

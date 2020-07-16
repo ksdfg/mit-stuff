@@ -2,9 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.cluster import KMeans
 
-df = pd.DataFrame((
-    (2, 3), (5, 6), (8, 7), (1, 4), (2, 2), (6, 7), (3, 4), (8, 6)
-))
+df = pd.DataFrame(((2, 3), (5, 6), (8, 7), (1, 4), (2, 2), (6, 7), (3, 4), (8, 6)))
 
 kmeans = KMeans(n_clusters=3)
 kmeans.fit(df)

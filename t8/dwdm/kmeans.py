@@ -5,15 +5,11 @@ def assign(dset, clusters):
     for d in dset:
         dist = []
         for c in clusters:
-            dist.append(
-                ((d[0] - c['centroid'][0]) ** 2 + (d[1] - c['centroid'][1]) ** 2) ** (1 / 2)
-            )
+            dist.append(((d[0] - c['centroid'][0]) ** 2 + (d[1] - c['centroid'][1]) ** 2) ** (1 / 2))
         clusters[dist.index(min(dist))]['values'].append(d)
 
 
-dataset = (
-    (2, 3), (5, 6), (8, 7), (1, 4), (2, 2), (6, 7), (3, 4), (8, 6)
-)
+dataset = ((2, 3), (5, 6), (8, 7), (1, 4), (2, 2), (6, 7), (3, 4), (8, 6))
 
 k = int(input("Enter number of clusters (k) : "))
 cluster = list()
@@ -34,7 +30,7 @@ while prev_cluster != cluster:
     for cl in cluster:
         cl['centroid'] = (
             sum(map(lambda x: x[0], cl['values'])) / len(cl['values']),
-            sum(map(lambda x: x[1], cl['values'])) / len(cl['values'])
+            sum(map(lambda x: x[1], cl['values'])) / len(cl['values']),
         )
         cl['values'] = []
 

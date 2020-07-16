@@ -24,8 +24,15 @@ y_pred = dtr.predict(x_test)
 print(y_pred)
 print(dtr.score(x_test, y_test))
 
-dot_data = export_graphviz(dtr, out_file=None, feature_names=feature_list, class_names=data_dummy['actual'].unique(),
-                           filled=True, rounded=True, special_characters=True)
+dot_data = export_graphviz(
+    dtr,
+    out_file=None,
+    feature_names=feature_list,
+    class_names=data_dummy['actual'].unique(),
+    filled=True,
+    rounded=True,
+    special_characters=True,
+)
 graph = graphviz.Source(dot_data)
 graph.render("temps_graph")
 

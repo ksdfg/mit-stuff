@@ -22,4 +22,3 @@ print(dataset[['PassengerId', 'Fare']].sort_values(by='Fare'), '\n')
 dataset['fare_normalised_z_score'] = stats.zscore(dataset['Fare'])
 print("Z SCore : After\n")
 print(dataset[['PassengerId', 'Fare', 'fare_normalised_z_score']], '\n')
-

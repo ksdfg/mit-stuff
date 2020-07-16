@@ -1,5 +1,5 @@
 # Project: 311 Service Request
-# Author :  Manas Kumar Mukul 
+# Author :  Manas Kumar Mukul
 
 import math
 import os
@@ -13,17 +13,44 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
 
 print(os.getcwd())
-f_read = pd.read_csv("311_Service_Requests_from_2010_to_Present.csv", sep=',', error_bad_lines=False, index_col=False,
-                     dtype='unicode')
+f_read = pd.read_csv(
+    "311_Service_Requests_from_2010_to_Present.csv", sep=',', error_bad_lines=False, index_col=False, dtype='unicode'
+)
 print(f_read.shape)
 print(f_read.info())
 print(f_read.columns)
-data_set = f_read.loc[:, ['Created Date', 'Closed Date', 'Agency', 'Complaint Type', 'Location Type', 'City',
-                          'Facility Type', 'Status', 'Due Date', 'Resolution Action Updated Date', 'Borough',
-                          'Park Borough']]
+data_set = f_read.loc[
+    :,
+    [
+        'Created Date',
+        'Closed Date',
+        'Agency',
+        'Complaint Type',
+        'Location Type',
+        'City',
+        'Facility Type',
+        'Status',
+        'Due Date',
+        'Resolution Action Updated Date',
+        'Borough',
+        'Park Borough',
+    ],
+]
 print(data_set)
-data_set.columns = ['Created_Date', 'Closed_Date', 'Agency', 'Complaint_Type', 'Location_Type', 'City',
-                    'Facility_Type', 'Status', 'Due_Date', 'Resolution_Action_Upd_Date', 'Borough', 'Park_Borough']
+data_set.columns = [
+    'Created_Date',
+    'Closed_Date',
+    'Agency',
+    'Complaint_Type',
+    'Location_Type',
+    'City',
+    'Facility_Type',
+    'Status',
+    'Due_Date',
+    'Resolution_Action_Upd_Date',
+    'Borough',
+    'Park_Borough',
+]
 print(data_set)
 print(data_set.isnull().sum())
 city_complaint_type = data_set.groupby(['City', 'Complaint_Type'])
@@ -60,8 +87,9 @@ data_set['Park_Borough'] = lbe.fit_transform(data_set['Park_Borough'])
 data_set['Status'] = lbe.fit_transform(data_set['Status'])
 print(data_set.describe())
 print(data_set.dtypes)
-x_train = data_set.drop(['Created_Date', 'Closed_Date', 'Due_Date', 'Resolution_Action_Upd_Date', 'Agency'], axis=1,
-                        inplace=True)
+x_train = data_set.drop(
+    ['Created_Date', 'Closed_Date', 'Due_Date', 'Resolution_Action_Upd_Date', 'Agency'], axis=1, inplace=True
+)
 x = data_set.iloc[:, 0:5]
 y = data_set.iloc[:, 6]
 print(y.isnull().sum())

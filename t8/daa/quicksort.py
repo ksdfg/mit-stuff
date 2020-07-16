@@ -31,7 +31,7 @@ def _qsort(array, low, high):
 def _qsort_random(array, low, high):
     arr = array.copy()
     if low < high:
-        pivot = choice(range(low, high+1))
+        pivot = choice(range(low, high + 1))
         i = low
         j = high
 
@@ -52,14 +52,14 @@ def _qsort_random(array, low, high):
 
     else:
         return []
-    
-    
+
+
 def qsort(array):
-    return _qsort(array, 0, len(array)-1)
+    return _qsort(array, 0, len(array) - 1)
 
 
 def qsort_random(array):
-    return _qsort_random(array, 0, len(array)-1)
+    return _qsort_random(array, 0, len(array) - 1)
 
 
 if __name__ == '__main__':
