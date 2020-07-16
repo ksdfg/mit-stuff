@@ -36,6 +36,24 @@ class Node:
         """
         return "\n".join([" ".join(row) for row in self.state])
 
+    def __eq__(self, other):
+        """
+        Specify how equality of two nodes is to be  checked
+        :param other: The object we're comparing it to
+        :return: True if they're equal, else false
+        """
+        result = True
+
+        for i in range(0, 3):
+            for j in range(0, 3):
+                if self.state[i][j] != other.state[i][j]:
+                    result = False
+                    break
+            if not result:
+                break
+
+        return result
+
     def _find_blank_space(self) -> (int, int):
         """
         Specifically used to find the position of the blank space represented by `_`
@@ -113,7 +131,8 @@ class Puzzle:
 
             # generate child nodes and append them to opened list
             for child in node.generate_children():
-                opened.append(child)
+                if child not in opened:
+                    opened.append(child)
 
             del opened[0]  # close current node
             opened.sort(key=lambda x: x.f_score)  # sort the opened list based on f value
