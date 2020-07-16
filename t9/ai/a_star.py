@@ -3,21 +3,6 @@ from typing import List, Optional
 
 
 class Node:
-    def calc_diff(self) -> int:
-        """
-        Calculates the difference between the given puzzle state and the goal
-        :return: difference between the given puzzle state and the goal
-        """
-        h_val = 0
-
-        # iterate through the matrix and calculate number of differences with goal state
-        for i in range(0, 3):
-            for j in range(0, 3):
-                if self.state[i][j] != self.goal[i][j] and self.state[i][j] != '_':
-                    h_val += 1
-
-        return h_val
-
     def __init__(self, state: List[List[str]], level: int, goal: List[List[str]]):
         """
         Initialize the node with the state, level of the node and the calculated f-score
@@ -28,7 +13,15 @@ class Node:
         self.state = state
         self.level = level
         self.goal = goal
-        self.f_score = self.calc_diff() + level
+
+        self.h_value = 0
+        # iterate through the matrix and calculate number of differences with goal state
+        for i in range(0, 3):
+            for j in range(0, 3):
+                if state[i][j] != goal[i][j] and state[i][j] != '_':
+                    self.h_value += 1
+
+        self.f_score = self.h_value + level
 
     def __str__(self):
         """
@@ -125,7 +118,7 @@ class Puzzle:
         opened.append(node)
 
         # loop until difference between state of current node state and goal state is not 0
-        while node.calc_diff() != 0:
+        while node.h_value != 0:
             # add node to solution
             solution.append(node)
 
