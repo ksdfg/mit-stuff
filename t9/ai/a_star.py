@@ -37,13 +37,7 @@ class Node:
         :param other: The object we're comparing it to
         :return: True if they're equal, else false
         """
-
-        for i in range(0, 3):
-            for j in range(0, 3):
-                if self.state[i][j] != other.state[i][j]:
-                    return False
-
-        return True
+        return self.state == other.state
 
     def _find_blank_space(self) -> (int, int):
         """
