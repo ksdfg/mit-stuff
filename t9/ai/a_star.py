@@ -3,16 +3,18 @@ from typing import List, Optional
 
 
 class Node:
-    def __init__(self, state: List[List[str]], level: int, goal: List[List[str]]):
+    def __init__(self, state: List[List[str]], level: int, goal: List[List[str]], parent=None):
         """
         Initialize the node with the state, level of the node and the calculated f-score
         :param state: Matrix representing the given puzzle state
         :param level: level of the node
         :param goal: Matrix representing the goal puzzle state
+        :param parent: Parent node
         """
         self.state = state
         self.level = level
         self.goal = goal
+        self.parent = parent
 
         self.h_value = 0
         # iterate through the matrix and calculate number of differences with goal state
@@ -35,17 +37,13 @@ class Node:
         :param other: The object we're comparing it to
         :return: True if they're equal, else false
         """
-        result = True
 
         for i in range(0, 3):
             for j in range(0, 3):
                 if self.state[i][j] != other.state[i][j]:
-                    result = False
-                    break
-            if not result:
-                break
+                    return False
 
-        return result
+        return True
 
     def _find_blank_space(self) -> (int, int):
         """
@@ -90,7 +88,7 @@ class Node:
         for i in positions:
             child = self._shuffle(self.state, x, y, i[0], i[1])
             if child is not None:
-                children.append(Node(child, self.level + 1, self.goal))
+                children.append(Node(child, self.level + 1, self.goal, self))
 
         return children
 
@@ -111,7 +109,6 @@ class Puzzle:
         :return: List of nodes that comprise of the solution
         """
         opened = []  # list of opened nodes
-        solution = []  # list of nodes in solution
 
         # Put the start node in the opened list
         node = Node(self.initial, 0, self.goal)
@@ -119,8 +116,9 @@ class Puzzle:
 
         # loop until difference between state of current node state and goal state is not 0
         while node.h_value != 0:
-            # add node to solution
-            solution.append(node)
+            # if a node has depth greater than 31, puzzle is unsolvable
+            if node.level > 31:
+                return []
 
             # generate child nodes and append them to opened list
             for child in node.generate_children():
@@ -131,8 +129,12 @@ class Puzzle:
             opened.sort(key=lambda x: x.f_score)  # sort the opened list based on f value
             node = opened[0]  # set node to next opened node with lowest f-score
 
-        # final node is also part of the solution
-        solution.append(node)
+        # get path from final node to initial node
+        solution = []
+        while node is not None:
+            solution.append(node)
+            node = node.parent
+        solution.sort(key=lambda x: x.level)
 
         return solution
 
@@ -149,5 +151,8 @@ if __name__ == "__main__":
     solution = puzzle.solve()
 
     # print solution
-    for i, node in enumerate(solution):
-        print(f"\nStep {i}", node, sep="\n")
+    if solution:
+        for i, node in enumerate(solution):
+            print(f"\nStep {i}", node, sep="\n")
+    else:
+        print("Cannot be solved")
