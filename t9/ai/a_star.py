@@ -114,12 +114,12 @@ class Puzzle:
             if node.level > 31:
                 return []
 
+            del opened[0]  # close current node
+
             # generate child nodes and append them to opened list
             for child in node.generate_children():
                 if child not in opened:
                     opened.append(child)
-
-            del opened[0]  # close current node
             opened.sort(key=lambda x: x.f_score)  # sort the opened list based on f value
             node = opened[0]  # set node to next opened node with lowest f-score
 
