@@ -142,6 +142,7 @@ public class Assigment1 {
                     String token = tokens[i];
 
                     if (isOpCode(token)) {
+
                         opTuple = OpTable.get(token);
                         switch (token) {
                             case "END" -> {
@@ -172,15 +173,21 @@ public class Assigment1 {
                         } else {
                             intermediateLine.append(stringOfTuple(opTuple));
                         }
+
                     } else if (symbol_table.containsKey(token)) {
+
                         intermediateLine.append("(S,").append(symbol_table.get(token).getIndex()).append(") ");
+
                     } else if (tokenCounter == 0) {
+
                         TableValue symbol_table_item = new TableValue();
                         symbol_table_item.setAddress(address_pointer);
                         symbol_table_item.setIndex(symbol_table_pointer);
                         symbol_table.put(token, symbol_table_item);
                         symbol_table_pointer++;
+
                     } else if (isNumeric(token)) {
+
                         if (tokens[i - 1].equals("DS")) {
                             TableValue symbol_table_item = new TableValue();
                             symbol_table_item.setAddress(address_pointer);
@@ -192,8 +199,11 @@ public class Assigment1 {
                             symbol_table_item.setIndex(symbol_table.get(tokens[i - 2]).getIndex());
                             symbol_table.put(tokens[i - 2], symbol_table_item);
                         }
+
                         intermediateLine.append("(C,").append(token).append(") ");
+
                     } else {
+
                         if (token.startsWith("=")) {
                             TableValue littabHolder = new TableValue();
                             littabHolder.setIndex(literal_table_pointer);
@@ -208,7 +218,9 @@ public class Assigment1 {
                             intermediateLine.append("(S,").append(String.valueOf(symbol_table_pointer)).append(") ");
                             symbol_table_pointer++;
                         }
+
                     }
+
                     tokenCounter++;
                 }
 
