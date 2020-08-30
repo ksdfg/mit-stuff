@@ -1,4 +1,4 @@
-class basics {
+public class basics {
     public static void main(String[] args) {
         // string to play with
         String s = "hello world";
