@@ -10,6 +10,7 @@ authors = ["ksdfg <ksdfg123@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+andriller = "^3.5.2"
 
 [tool.poetry.dev-dependencies]
 
