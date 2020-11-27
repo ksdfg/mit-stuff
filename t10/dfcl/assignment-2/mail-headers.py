@@ -18,9 +18,13 @@ imap.login(args.username, args.password)
 _, messages = imap.select('inbox')
 _, msg = imap.fetch(messages[0].decode('utf-8'), 'rfc822')
 
+# print number of messages in inbox
+print("Number of mails in the inbox :", len(messages))
+
 # iterate over response and print headers
 headers = []
 parser = HeaderParser()
+print("\nHeaders of the first mail in the inbox -\n")
 for response in msg:
     if isinstance(response, tuple):
         headers.extend(parser.parsestr(message_from_bytes(response[1]).as_string()).items())

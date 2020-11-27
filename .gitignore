@@ -12,3 +12,4 @@ venv
 project
 __pycache__
 *.class 
+*.iso
