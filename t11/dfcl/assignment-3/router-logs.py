@@ -1,3 +1,6 @@
+from csv import reader
+
+
 class Log:
     """
     Class reperesenting a single log entry
@@ -27,30 +30,27 @@ class Log:
         String representation of a log object
         :return: Formatted string with source, destination and protocol listed in that order
         """
-        return "{:>17}\t{:>17}\t{:>17}".format(self.source, self.destination, self.protocol)
+        return "{:<16}\t{:<16}\t{:<16}".format(self.source, self.destination, self.protocol)
 
     def __hash__(self) -> int:
         """
         Get the hashed value of the Log object
-        :return:
+        :return: Hashed value for current Log object
         """
         return hash(str(self))
 
 
 if __name__ == "__main__":
-    # read all logs from the log file
-    with open('logs.csv', 'r') as log_file:
-        lines = log_file.read().split("\n")
+    with open('logs.csv', 'r') as file:
+        # read all rows from the log file
+        rows = reader(file, delimiter=",")
 
-    # make list of logs
-    logs: list[Log] = []
-    for line in lines:
-        # split the line by `,` since it is a csv
-        args = [x.strip() for x in line.split(",")]
-        if len(args) == 3:
-            logs.append(Log(*args))
+        # make list of Log objects for each row
+        logs: list[Log] = []
+        for row in rows:
+            logs.append(Log(*row))
 
-    # print all unique logs and how many times they appear
-    print("{:>17}\t{:>17}\t{:>17}\t{:>17}".format("Source", "Destination", "Protocol", "Count"), end="\n\n")
-    for log in set(logs):
-        print("{}\t{:>17}".format(log, logs.count(log)))
+        # print all unique logs and how many times they appear
+        print("{:<16}\t{:<16}\t{:<16}".format("Source", "Destination", "Protocol"), "Count", end="\n\n")
+        for log in set(logs):
+            print(log, logs.count(log))
