@@ -13,3 +13,5 @@ project
 __pycache__
 *.class 
 *.iso
+*.log
+.env
