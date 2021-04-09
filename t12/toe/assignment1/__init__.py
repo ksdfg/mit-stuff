@@ -1,8 +1,10 @@
 from typing import Iterable
 
+from decouple import config
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
@@ -26,7 +28,9 @@ def run_github_login(email: str, password: str) -> str:
     :param password: password to be used for login
     :return: Username displayed
     """
-    driver = webdriver.Firefox()
+    options = Options()
+    options.headless = config("ass1_headless", cast=bool)
+    driver = webdriver.Firefox(options=options)
 
     try:
         # go to github homepage
