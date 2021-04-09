@@ -2,7 +2,6 @@ from typing import Iterable
 
 from decouple import config
 from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.webdriver import WebDriver
@@ -29,7 +28,7 @@ def run_github_login(email: str, password: str) -> str:
     :return: Username displayed
     """
     options = Options()
-    options.headless = config("ass1_headless", cast=bool)
+    options.headless = config("ass1_headless", cast=bool, default=False)
     driver = webdriver.Firefox(options=options)
 
     try:
@@ -41,8 +40,6 @@ def run_github_login(email: str, password: str) -> str:
 
         # wait for the sign in link to load and then click on it
         _wait_for_elements(driver=driver, locators=((By.LINK_TEXT, sign_in_link_text),))
-
-        # when sign in link is loaded, click on it
         driver.find_element_by_link_text(sign_in_link_text).click()
 
         # define IDs for email and password input fields and CSS Class for button field
@@ -70,6 +67,6 @@ def run_github_login(email: str, password: str) -> str:
         driver.close()
         return username
 
-    except TimeoutException as e:
+    except Exception as e:
         driver.close()
         raise e
