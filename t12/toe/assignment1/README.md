@@ -6,10 +6,18 @@ The following vars need to be set in your .env/settings.ini file, or set/passed 
 
 - `ass1_headless` - whether selenium is to be run headless or not (defaults to false)
 
-To fetch links, run
-
+To fetch articles, run
 ```commandline
 python -m assignment1
+```
+
+If you want to fetch articles for a specific query, run
+```commandline
+python -m assignment1 -q/--query QUERY
+```
+You can check out the help text for this by running
+```commandline
+python -m assignment1 -h/--help
 ```
 
 (considering your pwd is the repo root)
