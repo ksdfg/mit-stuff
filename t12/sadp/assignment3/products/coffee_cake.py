@@ -5,4 +5,4 @@ class CoffeeCake(Product):
     price = 200
 
     def __init__(self):
-        print(f"Baking a Coffee Cake worth Rs.{self.price}")
+        print(f"Baking a Coffee Cake worth ₹{self.price}")

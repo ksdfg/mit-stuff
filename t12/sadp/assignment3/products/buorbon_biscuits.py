@@ -5,4 +5,4 @@ class BuorbonBiscuits(Product):
     price = 50
 
     def __init__(self):
-        print(f"Baking Buorbon Biscuits worth Rs.{self.price}")
+        print(f"Baking Buorbon Biscuits worth ₹{self.price}")
