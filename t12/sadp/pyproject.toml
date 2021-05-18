@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "sadp"
+version = "0.1.0"
+description = "Software Architecture and Design Principles Assignments"
+authors = ["ksdfg <ksdfg123@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+black = "^21.5b1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
