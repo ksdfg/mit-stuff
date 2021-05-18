@@ -10,5 +10,14 @@ from assignment3.products.pita_bread import PitaBread
 from assignment3.products.whole_wheat_bread import WholeWheatBread
 
 
-def get_product_class_from_name(name: str) -> type:
-    return globals()[name]
+product_classes: dict[str, type] = {
+    "Butterscotch Cake": ButterscotchCake,
+    "Coffee Cake": CoffeeCake,
+    "Truffle Cake": TruffleCake,
+    "Buorbon Biscuits": BuorbonBiscuits,
+    "Elaichi Biscuits": ElaichiBiscuits,
+    "Wholegrain Biscuits": WholegrainBiscuits,
+    "Multigrain Bread": MultigrainBread,
+    "Pita Bread": PitaBread,
+    "Wholewheat Bread": WholeWheatBread,
+}

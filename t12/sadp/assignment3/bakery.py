@@ -20,7 +20,8 @@ class Bakery(object):
         :return: Nothing
         """
         product = self.product_factory.create(product_type)
-        self.products.append(product)
+        if product:
+            self.products.append(product)
 
     def sell_product(self, product_index: int) -> Optional[Product]:
         """

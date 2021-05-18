@@ -5,4 +5,4 @@ class Product(object):
         """
         :return: String that represents a Product object textually
         """
-        return f"<Product {self.__class__.__name__}>"
+        return f"<Product '{self.__class__.__name__}'>"
