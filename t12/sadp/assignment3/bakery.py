@@ -5,13 +5,25 @@ from assignment3.product_factory import ProductFactory
 
 
 class Bakery(object):
-    product_factory = ProductFactory()
+    name: str
+    products: list[Product] = []
 
-    def __init__(self, name: str, products: Optional[list[Product]] = None):
-        # set name
-        self.name = name
-        # set list of products, initialize to empty list if not given
-        self.products = products if products else []
+    __instance = None
+    _product_factory = ProductFactory()
+
+    def __init__(self, name: str):
+        if self.__instance is not None:
+            print("This is a singleton class, and an instance already exists!")
+        else:
+            self.name = name
+            Bakery.__instance = self
+
+    @staticmethod
+    def get_instance():
+        """
+        :return: Singleton instance of Bakery class
+        """
+        return Bakery.__instance
 
     def create_product(self, product_type: str):
         """
@@ -19,7 +31,7 @@ class Bakery(object):
         :param product_type: Type of product to be created e.g. WholegrainBiscuits, TruffleCake etc.
         :return: Nothing
         """
-        product = self.product_factory.create(product_type)
+        product = self._product_factory.create(product_type)
         if product:
             self.products.append(product)
 

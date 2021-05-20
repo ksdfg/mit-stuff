@@ -16,6 +16,10 @@ if __name__ == "__main__":
     bakery = Bakery(name="MIT Bakery")
     print("\nCreated", bakery)
 
+    print("\nTrying to create another bakery")
+    bakery = Bakery("MIT WPU Bakery")
+    print(f"Existing instance of Bakery is {Bakery.get_instance()}")
+
     print("\nAdding a few products to the Bakery's inventory")
     bakery.create_product("Butterscotch Cake")
     bakery.create_product("Pita Bread")
