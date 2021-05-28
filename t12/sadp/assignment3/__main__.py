@@ -7,14 +7,14 @@ if __name__ == "__main__":
     for product_class in product_classes.keys():
         print(f"- {product_class}")
 
-    bakery_outlet = BakeryOutlet(name="MIT Bakery")
+    bakery_outlet = BakeryOutlet(name="MIT Bakery Outlet")
     print("\nCreated", bakery_outlet)
 
-    print("\nTrying to create another bakery")
-    bakery_outlet = BakeryOutlet("MIT WPU Bakery")
-    print(f"Existing instance of Bakery is {BakeryOutlet.get_instance()}")
+    print("\nTrying to create another bakery outlet")
+    bakery_outlet = BakeryOutlet("MIT WPU Bakery Outlet")
+    print(f"Existing instance of BakeryOutlet is {BakeryOutlet.get_instance()}")
 
-    print("\nAdding a few products to the Bakery's inventory")
+    print("\nAdding a few products to the Bakery Outlet's inventory")
     bakery_outlet.create_product("Butterscotch Cake")
     bakery_outlet.create_product("Pita Bread")
     bakery_outlet.create_product("Buorbon Biscuits")
@@ -26,7 +26,8 @@ if __name__ == "__main__":
 
     print("\n", bakery_outlet.list_products(), sep="")
 
-    print("\nAdd another product to the Bakery's inventory")
+    print("\nAdd more products to the Bakery Outlet's inventory")
     bakery_outlet.create_product("Wholegrain Biscuits")
+    bakery_outlet.create_product("Truffle Cake")
 
     print("\n", bakery_outlet.list_products(), sep="")

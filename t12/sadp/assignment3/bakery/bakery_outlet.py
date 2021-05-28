@@ -1,7 +1,7 @@
 from typing import Optional
 
+from assignment3.bakery_proxy import BakeryProxy
 from assignment3.products import Product
-from assignment3.product_factory import ProductFactory
 
 
 class BakeryOutlet(object):
@@ -9,7 +9,7 @@ class BakeryOutlet(object):
     products: list[Product] = []
 
     __instance = None
-    _product_factory = ProductFactory()
+    _proxy = BakeryProxy()
 
     def __init__(self, name: str):
         if self.__instance is not None:
@@ -31,7 +31,7 @@ class BakeryOutlet(object):
         :param product_type: Type of product to be created e.g. WholegrainBiscuits, TruffleCake etc.
         :return: Nothing
         """
-        product = self._product_factory.create(product_type)
+        product = self._proxy.bake(product_type)
         if product:
             self.products.append(product)
 
@@ -60,7 +60,7 @@ class BakeryOutlet(object):
             ret += f"\n- {product}"
         return ret
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
         :return: String that represents a BakeryOutlet object textually
         """

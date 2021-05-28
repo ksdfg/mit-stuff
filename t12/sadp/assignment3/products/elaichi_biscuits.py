@@ -2,7 +2,8 @@ from .product import Product
 
 
 class ElaichiBiscuits(Product):
-    price = 50
+    selling_price = 50
+    cost_price = 20
 
     def __init__(self):
-        print(f"Baking Elaichi Biscuits worth ₹{self.price}")
+        print(f"Baking Elaichi Biscuits worth ₹{self.selling_price}, operation costs ₹{self.cost_price}")

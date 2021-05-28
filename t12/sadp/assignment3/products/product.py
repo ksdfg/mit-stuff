@@ -1,5 +1,6 @@
 class Product(object):
-    price: int
+    selling_price: int
+    cost_price: int
 
     def __repr__(self) -> str:
         """
