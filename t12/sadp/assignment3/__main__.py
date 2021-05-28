@@ -1,11 +1,5 @@
-from assignment3 import Bakery
+from assignment3.bakery import BakeryOutlet
 from assignment3.products import product_classes
-
-
-def print_bakery_inventory(bakery: Bakery):
-    print("\nBakery's inventory as of now:")
-    for product in bakery.products:
-        print(f"- {product}")
 
 
 if __name__ == "__main__":
@@ -13,26 +7,26 @@ if __name__ == "__main__":
     for product_class in product_classes.keys():
         print(f"- {product_class}")
 
-    bakery = Bakery(name="MIT Bakery")
-    print("\nCreated", bakery)
+    bakery_outlet = BakeryOutlet(name="MIT Bakery")
+    print("\nCreated", bakery_outlet)
 
     print("\nTrying to create another bakery")
-    bakery = Bakery("MIT WPU Bakery")
-    print(f"Existing instance of Bakery is {Bakery.get_instance()}")
+    bakery_outlet = BakeryOutlet("MIT WPU Bakery")
+    print(f"Existing instance of Bakery is {BakeryOutlet.get_instance()}")
 
     print("\nAdding a few products to the Bakery's inventory")
-    bakery.create_product("Butterscotch Cake")
-    bakery.create_product("Pita Bread")
-    bakery.create_product("Buorbon Biscuits")
+    bakery_outlet.create_product("Butterscotch Cake")
+    bakery_outlet.create_product("Pita Bread")
+    bakery_outlet.create_product("Buorbon Biscuits")
 
-    print_bakery_inventory(bakery)
+    print("\n", bakery_outlet.list_products(), sep="")
 
     print("\nSelling second product in inventory")
-    print(f"Product sold = {bakery.sell_product(1)}")
+    print(f"Product sold = {bakery_outlet.sell_product(1)}")
 
-    print_bakery_inventory(bakery)
+    print("\n", bakery_outlet.list_products(), sep="")
 
     print("\nAdd another product to the Bakery's inventory")
-    bakery.create_product("Wholegrain Biscuits")
+    bakery_outlet.create_product("Wholegrain Biscuits")
 
-    print_bakery_inventory(bakery)
+    print("\n", bakery_outlet.list_products(), sep="")

@@ -4,7 +4,7 @@ from assignment3.products import Product
 from assignment3.product_factory import ProductFactory
 
 
-class Bakery(object):
+class BakeryOutlet(object):
     name: str
     products: list[Product] = []
 
@@ -16,14 +16,14 @@ class Bakery(object):
             print("This is a singleton class, and an instance already exists!")
         else:
             self.name = name
-            Bakery.__instance = self
+            BakeryOutlet.__instance = self
 
     @staticmethod
     def get_instance():
         """
-        :return: Singleton instance of Bakery class
+        :return: Singleton instance of BakeryOutlet class
         """
-        return Bakery.__instance
+        return BakeryOutlet.__instance
 
     def create_product(self, product_type: str):
         """
@@ -38,7 +38,7 @@ class Bakery(object):
     def sell_product(self, product_index: int) -> Optional[Product]:
         """
         Sell product present at index number given in the bakery's list of products
-        :param product_index: Index at which product to be sold is present in Bakery object's list of products
+        :param product_index: Index at which product to be sold is present in BakeryOutlet object's list of products
         :return: Product that has been sold
         """
         product = None
@@ -51,8 +51,17 @@ class Bakery(object):
 
         return product
 
+    def list_products(self) -> str:
+        """
+        :return: All the products in the BakeryOutlet object's list of products as a formatted string
+        """
+        ret = f"Bakery Outlet's inventory as of now:"
+        for product in self.products:
+            ret += f"\n- {product}"
+        return ret
+
     def __repr__(self):
         """
-        :return: String that represents a Bakery object textually
+        :return: String that represents a BakeryOutlet object textually
         """
-        return f"<Bakery '{self.name}'>"
+        return f"<Bakery Outlet '{self.name}'>"
