@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 
-from assignment1 import run_google_scholar
+from selenium_assignment import run_google_scholar
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Fetch links from Google Scholars for a specific query")
