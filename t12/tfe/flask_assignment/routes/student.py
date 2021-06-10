@@ -1,7 +1,7 @@
 from traceback import print_exc
 from typing import Union
 
-from flask import jsonify, Response, request
+from flask import jsonify, Response, request, redirect
 
 from flask_assignment import app, db
 from flask_assignment.models import Student
@@ -18,14 +18,14 @@ def create_student() -> Response:
         student = Student(name=request.form["name"], email=request.form["email"])
         db.session.add(student)
         db.session.commit()
-        return jsonify(student.to_dict())
+        return redirect("students")
     except Exception as e:
         print_exc(e)
         return jsonify({"error": str(e)})
 
 
 @app.get("/students")
-def get_all_students() -> Union[str, Response]:
+def get_students() -> Union[str, Response]:
     """
     Get all students
     :return: Return HTML template displaying all students in a table

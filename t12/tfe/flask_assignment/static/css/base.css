@@ -4,9 +4,21 @@ html, body, .content {
     width: 100%;
 }
 
-body, .content {
+body {
     display: flex;
     flex-direction: column;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
+    width: 100%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
 }
